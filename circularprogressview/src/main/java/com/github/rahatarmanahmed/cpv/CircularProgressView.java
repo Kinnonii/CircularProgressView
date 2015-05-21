@@ -34,6 +34,7 @@ public class CircularProgressView extends View {
     private int thickness, color, animDuration, animSteps;
 
     private CircularProgressViewListener listener;
+    
     // Animation related stuff
     private float startAngle;
     private float actualProgress;
@@ -63,7 +64,7 @@ public class CircularProgressView extends View {
         updatePaint();
 
         bounds = new RectF();
-
+        
         if(autostartAnimation)
             startAnimation();
     }
@@ -139,9 +140,9 @@ public class CircularProgressView extends View {
     {
         int paddingLeft = getPaddingLeft();
         int paddingTop = getPaddingTop();
-        bounds.set(paddingLeft+thickness, paddingTop+thickness, size-paddingLeft-thickness, size-paddingTop-thickness);
+        bounds.set(paddingLeft + thickness, paddingTop + thickness, size - paddingLeft - thickness, size - paddingTop - thickness);
     }
-
+    
     private void updatePaint()
     {
         paint.setColor(color);
@@ -178,7 +179,7 @@ public class CircularProgressView extends View {
     public void setIndeterminate(boolean isIndeterminate) {
         boolean reset = this.isIndeterminate == isIndeterminate;
         this.isIndeterminate = isIndeterminate;
-        if (reset)
+        if(reset)
             resetAnimation();
         if (listener != null) {
             listener.onModeChanged(isIndeterminate);
@@ -242,6 +243,7 @@ public class CircularProgressView extends View {
     }
 
     /**
+     *
      * @return current progress
      */
     public float getProgress() {
@@ -268,8 +270,16 @@ public class CircularProgressView extends View {
                     actualProgress = (Float) animation.getAnimatedValue();
                     invalidate();
                 }
-
             });
+            progressAnimator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    if (listener != null) {
+                        listener.onProgressUpdateEnd(currentProgress);
+                    }
+                }
+            });
+
             progressAnimator.start();
         }
         invalidate();
@@ -278,10 +288,17 @@ public class CircularProgressView extends View {
         }
     }
 
+    /**
+     * @return listener
+     */
     public CircularProgressViewListener getListener() {
         return listener;
     }
 
+
+    /**
+     * @param listener Pass null if you want to remove it
+     */
     public void setListener(CircularProgressViewListener listener) {
         this.listener = listener;
     }

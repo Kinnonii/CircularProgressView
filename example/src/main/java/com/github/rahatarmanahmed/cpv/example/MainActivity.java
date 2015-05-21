@@ -66,9 +66,8 @@ public class MainActivity extends Activity {
         });
     }
 
-    private void startAnimationThreadStuff(long delay)
-    {
-        if(updateThread != null && updateThread.isAlive())
+    private void startAnimationThreadStuff(long delay) {
+        if (updateThread != null && updateThread.isAlive())
             updateThread.interrupt();
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
