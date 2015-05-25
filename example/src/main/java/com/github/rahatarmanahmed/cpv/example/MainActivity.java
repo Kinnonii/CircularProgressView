@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,27 +25,6 @@ public class MainActivity extends Activity {
 
         // Test loading animation
         startAnimationThreadStuff(1000);
-        progressView.setListener(new CircularProgressView.CircularProgressViewListener() {
-            @Override
-            public void onProgressUpdated(float currentProgress) {
-
-            }
-
-            @Override
-            public void onProgressUpdateEnd(float currentProgress) {
-                Log.d("EXAMPLE", "Progress animation ended at progress" + currentProgress);
-            }
-
-            @Override
-            public void onAnimationReset() {
-
-            }
-
-            @Override
-            public void onModeChanged(boolean isIndeterminate) {
-
-            }
-        });
         final Button button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
